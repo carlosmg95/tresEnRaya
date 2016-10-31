@@ -5,6 +5,27 @@ const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 0 - los 0";
 const VALORES = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
 
+var ganador = function(valores, numeroFila, numeroColumna) {
+    if(horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
+        alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
+    }
+};
+
+var horizontal = function(valores, numeroFila) {
+    return valores[numeroFila][0] === valores[numeroFila][1] && valores[numeroFila][0] === valores[numeroFila][2];
+};
+
+var vertical = function(valores, numeroColumna) {
+    return valores[0][numeroColumna] === valores[1][numeroColumna] && valores[0][numeroColumna] === valores[2][numeroColumna];
+};
+
+var diagonal = function(valores) {
+    let diagonal1 = [[valores[0][0], valores[1][1], valores[2][2]], ['-', '-', '-']];
+    let diagonal2 = [[valores[0][2], valores[1][1], valores[2][0]], ['-', '-', '-']];
+
+    return (diagonal1[0].indexOf('-') < 0 && horizontal(diagonal1, 0)) || (diagonal2[0].indexOf('-') < 0 && horizontal(diagonal2, 0));
+};
+
 var App = React.createClass({
     getInitialState: function() {
         return {
@@ -21,6 +42,7 @@ var App = React.createClass({
             turno: (this.state.turno === JUGADORX) ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
         });
+        ganador(valores, numeroFila, numeroColumna);
     },
 
     render: function() {
