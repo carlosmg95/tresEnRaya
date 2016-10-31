@@ -18,13 +18,23 @@ var App = React.createClass({
         };
     },
 
+    appClick: function appClick(numeroFila, numeroColumna) {
+        var valores = this.state.valores;
+        var nuevoValor = this.state.turno === JUGADORX ? 'X' : '0';
+        valores[numeroFila][numeroColumna] = nuevoValor;
+        this.setState({
+            turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
+            valores: this.state.valores
+        });
+    },
+
     render: function render() {
         var texto = "Turno del " + this.state.turno;
         return React.createElement(
             "div",
             null,
             React.createElement(Cabecera, { texto: texto }),
-            React.createElement(Tablero, { valores: this.state.valores })
+            React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick })
         );
     }
 });
@@ -59,10 +69,16 @@ var casillaStyle = {
 var Casilla = React.createClass({
     displayName: 'Casilla',
 
+    casillaClick: function casillaClick() {
+        if (this.props.valor === "-") {
+            this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
+        }
+    },
+
     render: function render() {
         return React.createElement(
             'button',
-            { style: casillaStyle },
+            { style: casillaStyle, className: this.props.valor === "-" ? "clickable" : "no_clickable", onClick: this.casillaClick },
             this.props.valor
         );
     }
@@ -78,18 +94,22 @@ var Casilla = require("./Casilla.jsx");
 var Tablero = React.createClass({
     displayName: "Tablero",
 
+    tableroClick: function tableroClick(numeroFila, numeroColumna) {
+        this.props.manejadorTableroClick(numeroFila, numeroColumna);
+    },
+
     render: function render() {
         var tablero = this.props.valores.map(function (valoresFila, indiceFila) {
             var fila = valoresFila.map(function (valor, indiceColumna) {
                 var myKey = "" + indiceFila + indiceColumna;
-                return React.createElement(Casilla, { valor: valor, key: myKey });
-            });
+                return React.createElement(Casilla, { valor: valor, indiceFila: indiceFila, indiceColumna: indiceColumna, key: myKey, manejadorClick: this.tableroClick });
+            }, this);
             return React.createElement(
                 "div",
                 null,
                 fila
             );
-        });
+        }, this);
         return React.createElement(
             "div",
             null,
