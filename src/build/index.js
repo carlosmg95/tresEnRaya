@@ -31,7 +31,7 @@ var App = React.createClass({
 
 module.exports = App;
 
-},{"./Cabecera.jsx":2,"./Tablero.jsx":3}],2:[function(require,module,exports){
+},{"./Cabecera.jsx":2,"./Tablero.jsx":4}],2:[function(require,module,exports){
 "use strict";
 
 var Cabecera = React.createClass({
@@ -49,7 +49,31 @@ var Cabecera = React.createClass({
 module.exports = Cabecera;
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
+var casillaStyle = {
+    height: '100px',
+    width: '100px'
+};
+
+var Casilla = React.createClass({
+    displayName: 'Casilla',
+
+    render: function render() {
+        return React.createElement(
+            'button',
+            { style: casillaStyle },
+            this.props.valor
+        );
+    }
+});
+
+module.exports = Casilla;
+
+},{}],4:[function(require,module,exports){
 "use strict";
+
+var Casilla = require("./Casilla.jsx");
 
 var Tablero = React.createClass({
     displayName: "Tablero",
@@ -57,11 +81,8 @@ var Tablero = React.createClass({
     render: function render() {
         var tablero = this.props.valores.map(function (valoresFila, indiceFila) {
             var fila = valoresFila.map(function (valor, indiceColumna) {
-                return React.createElement(
-                    "span",
-                    null,
-                    valor
-                );
+                var myKey = "" + indiceFila + indiceColumna;
+                return React.createElement(Casilla, { valor: valor, key: myKey });
             });
             return React.createElement(
                 "div",
@@ -79,11 +100,11 @@ var Tablero = React.createClass({
 
 module.exports = Tablero;
 
-},{}],4:[function(require,module,exports){
+},{"./Casilla.jsx":3}],5:[function(require,module,exports){
 "use strict";
 
 var App = require("./App.jsx");
 
 ReactDOM.render(React.createElement(App, { valor: "X" }), document.getElementById('contenedor'));
 
-},{"./App.jsx":1}]},{},[4]);
+},{"./App.jsx":1}]},{},[5]);
