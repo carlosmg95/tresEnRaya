@@ -17,22 +17,20 @@ var App = React.createClass({
 
     render: function render() {
         var texto = "Turno del " + this.state.turno;
-        var htmlTablero = [];
-        for (var i = 0; i < this.state.valores.length; i++) {
-            var htmlFila = [];
-            for (var j = 0; j < this.state.valores[i].length; j++) {
-                htmlFila.push(React.createElement(
+        var htmlTablero = this.state.valores.map(function (valoresFila, indiceFila) {
+            var fila = valoresFila.map(function (valor, indiceColumna) {
+                return React.createElement(
                     "span",
                     null,
-                    this.state.valores[i][j]
-                ));
-            }
-            htmlTablero.push(React.createElement(
+                    valor
+                );
+            });
+            return React.createElement(
                 "div",
                 null,
-                htmlFila
-            ));
-        }
+                fila
+            );
+        });
 
         return React.createElement(
             "div",

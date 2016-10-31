@@ -12,14 +12,12 @@ var App = React.createClass({
 
     render: function() {
         var texto = "Turno del " + this.state.turno;
-        var htmlTablero = [];
-        for(var i = 0; i < this.state.valores.length; i++) {
-            var htmlFila = [];
-            for (var j = 0; j < this.state.valores[i].length; j++) {
-                htmlFila.push(<span>{this.state.valores[i][j]}</span>);
-            }
-            htmlTablero.push(<div>{htmlFila}</div>);
-        }
+        let htmlTablero = this.state.valores.map(function(valoresFila, indiceFila) {
+            let fila = valoresFila.map(function(valor, indiceColumna) {
+                return (<span>{valor}</span>)
+            });
+            return (<div>{fila}</div>)
+        });
 
         return (
             <div>
