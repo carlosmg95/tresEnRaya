@@ -8,12 +8,6 @@ var JUGADORX = "jugador 1 - las X";
 var JUGADOR0 = "jugador 0 - los 0";
 var VALORES = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
 
-var ganador = function ganador(valores, numeroFila, numeroColumna) {
-    if (horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
-        alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
-    }
-};
-
 var horizontal = function horizontal(valores, numeroFila) {
     return valores[numeroFila][0] === valores[numeroFila][1] && valores[numeroFila][0] === valores[numeroFila][2];
 };
@@ -35,8 +29,19 @@ var App = React.createClass({
     getInitialState: function getInitialState() {
         return {
             turno: JUGADORX,
-            valores: VALORES
+            valores: VALORES,
+            fin: false
         };
+    },
+
+    ganador: function ganador(valores, numeroFila, numeroColumna) {
+        if (horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
+            this.render();
+            this.setState({
+                fin: true
+            });
+            alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
+        }
     },
 
     appClick: function appClick(numeroFila, numeroColumna) {
@@ -47,7 +52,7 @@ var App = React.createClass({
             turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
         });
-        ganador(valores, numeroFila, numeroColumna);
+        this.ganador(valores, numeroFila, numeroColumna);
     },
 
     render: function render() {
@@ -56,7 +61,7 @@ var App = React.createClass({
             "div",
             null,
             React.createElement(Cabecera, { texto: texto }),
-            React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick })
+            React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick, fin: this.state.fin })
         );
     }
 });
@@ -92,7 +97,7 @@ var Casilla = React.createClass({
     displayName: 'Casilla',
 
     casillaClick: function casillaClick() {
-        if (this.props.valor === "-") {
+        if (this.props.valor === "-" && !this.props.fin) {
             this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
         }
     },
@@ -124,7 +129,7 @@ var Tablero = React.createClass({
         var tablero = this.props.valores.map(function (valoresFila, indiceFila) {
             var fila = valoresFila.map(function (valor, indiceColumna) {
                 var myKey = "" + indiceFila + indiceColumna;
-                return React.createElement(Casilla, { valor: valor, indiceFila: indiceFila, indiceColumna: indiceColumna, key: myKey, manejadorClick: this.tableroClick });
+                return React.createElement(Casilla, { valor: valor, indiceFila: indiceFila, indiceColumna: indiceColumna, key: myKey, fin: this.props.fin, manejadorClick: this.tableroClick });
             }, this);
             return React.createElement(
                 "div",

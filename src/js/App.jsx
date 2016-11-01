@@ -5,12 +5,6 @@ const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 0 - los 0";
 const VALORES = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
 
-var ganador = function(valores, numeroFila, numeroColumna) {
-    if(horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
-        alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
-    }
-};
-
 var horizontal = function(valores, numeroFila) {
     return valores[numeroFila][0] === valores[numeroFila][1] && valores[numeroFila][0] === valores[numeroFila][2];
 };
@@ -30,8 +24,18 @@ var App = React.createClass({
     getInitialState: function() {
         return {
             turno: JUGADORX,
-            valores: VALORES
+            valores: VALORES,
+            fin: false
         };
+    },
+
+    ganador: function(valores, numeroFila, numeroColumna) {
+        if(horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
+            this.setState({
+                fin: true
+            });
+            alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
+        }
     },
 
     appClick: function(numeroFila, numeroColumna) {
@@ -42,7 +46,7 @@ var App = React.createClass({
             turno: (this.state.turno === JUGADORX) ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
         });
-        ganador(valores, numeroFila, numeroColumna);
+        this.ganador(valores, numeroFila, numeroColumna);
     },
 
     render: function() {
@@ -50,7 +54,7 @@ var App = React.createClass({
         return (
             <div>
                 <Cabecera texto={texto}/>
-                <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick}/>
+                <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin}/>
             </div>
         )
     }

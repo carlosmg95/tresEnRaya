@@ -9,7 +9,9 @@ var Tablero = React.createClass({
         let tablero = this.props.valores.map(function(valoresFila, indiceFila) {
             let fila = valoresFila.map(function(valor, indiceColumna) {
                 let myKey = "" + indiceFila + indiceColumna;
-                return (<Casilla valor={valor} indiceFila={indiceFila} indiceColumna={indiceColumna} key={myKey} manejadorClick={this.tableroClick}/>)
+                return (
+                    <Casilla valor={valor} indiceFila={indiceFila} indiceColumna={indiceColumna} key={myKey} fin={this.props.fin} manejadorClick={this.tableroClick}/>
+                )
             }, this);
             return (<div>{fila}</div>)
         }, this);
@@ -18,4 +20,3 @@ var Tablero = React.createClass({
 });
 
 module.exports = Tablero;
-    
