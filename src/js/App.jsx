@@ -1,9 +1,12 @@
 const Cabecera = require("./Cabecera.jsx");
-const Tablero = require("./Tablero.jsx"); 
+const Tablero = require("./Tablero.jsx");
+const Marcador = require("./Marcador.jsx");
 
-const JUGADORX = "jugador 1 - las X";
-const JUGADOR0 = "jugador 0 - los 0";
+const JUGADORX = {name: "JUGADORX", text: "jugador 1 - las X", points: 0};
+const JUGADOR0 = {name: "JUGADOR0", text: "jugador 0 - los 0", points: 0};
+const jf = {name: "jf", text: "jugador f - las f", points: 90};
 const VALORES = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
+var jugadores = [JUGADOR0, JUGADORX, jf];
 
 var horizontal = function(valores, numeroFila) {
     return valores[numeroFila][0] === valores[numeroFila][1] && valores[numeroFila][0] === valores[numeroFila][2];
@@ -34,7 +37,8 @@ var App = React.createClass({
             this.setState({
                 fin: true
             });
-            alert("El ganador es el JUGADOR" + valores[numeroFila][numeroColumna]);
+            this.state.turno.points++;
+            alert("El ganador es el " + this.state.turno.name);
         }
     },
 
@@ -42,19 +46,20 @@ var App = React.createClass({
         let valores = this.state.valores;
         let nuevoValor = (this.state.turno === JUGADORX) ? 'X' : '0';
         valores[numeroFila][numeroColumna] = nuevoValor;
+        this.ganador(valores, numeroFila, numeroColumna);
         this.setState({
             turno: (this.state.turno === JUGADORX) ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
         });
-        this.ganador(valores, numeroFila, numeroColumna);
     },
 
     render: function() {
-        var texto = "Turno del " + this.state.turno;
+        var texto = "Turno del " + this.state.turno.text;
         return (
             <div>
                 <Cabecera texto={texto}/>
                 <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin}/>
+                <Marcador jugadores={jugadores}/>
             </div>
         )
     }
