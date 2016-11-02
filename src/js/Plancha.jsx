@@ -1,3 +1,8 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+import { Panel } from 'react-bootstrap';
+
 const planchaStyle = {
     float: 'left'
 }
@@ -5,10 +10,9 @@ const planchaStyle = {
 var Plancha = React.createClass({
     render: function() {
         return (
-            <div style={planchaStyle}>
-                <h3>{this.props.jugador.name}</h3>
-                <p>{this.props.jugador.points}</p>
-            </div>
+            <Panel header={this.props.jugador.name}>
+                {this.props.jugador.points}
+            </Panel>
         )
     }
 

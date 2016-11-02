@@ -1,10 +1,19 @@
-var Plancha = require("./Plancha.jsx");
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+//var Plancha = require("./Plancha.jsx");
+
+import { Panel } from 'react-bootstrap';
 
 var Marcador = React.createClass({
     render: function() {
         let marcador = this.props.jugadores.map(function(jugador) {
             let myKey = jugador.name;
-            return(<Plancha jugador={jugador} key={myKey}/>);
+            return(
+                <Panel key={myKey} header={this.props.jugador.name}>
+                    {this.props.jugador.points}
+                </Panel>
+            );
         }, this);
         return(<div>{marcador}</div>);
     }

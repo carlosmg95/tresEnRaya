@@ -1,12 +1,14 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 const Cabecera = require("./Cabecera.jsx");
 const Tablero = require("./Tablero.jsx");
 const Marcador = require("./Marcador.jsx");
 
-const JUGADORX = {name: "JUGADORX", text: "jugador 1 - las X", points: 0};
-const JUGADOR0 = {name: "JUGADOR0", text: "jugador 0 - los 0", points: 0};
-const jf = {name: "jf", text: "jugador f - las f", points: 90};
+let JUGADORX = {name: "JUGADORX", text: "jugador 1 - las X", points: 0};
+let JUGADOR0 = {name: "JUGADOR0", text: "jugador 0 - los 0", points: 0};
 const VALORES = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
-var jugadores = [JUGADOR0, JUGADORX, jf];
+let jugadores = [JUGADOR0, JUGADORX];
 
 var horizontal = function(valores, numeroFila) {
     return valores[numeroFila][0] === valores[numeroFila][1] && valores[numeroFila][0] === valores[numeroFila][2];
@@ -34,11 +36,12 @@ var App = React.createClass({
 
     ganador: function(valores, numeroFila, numeroColumna) {
         if(horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
-            this.setState({
-                fin: true
-            });
             this.state.turno.points++;
             alert("El ganador es el " + this.state.turno.name);
+            this.setState({
+                turno: "Juego acabado",
+                fin: true
+            });
         }
     },
 
@@ -46,15 +49,15 @@ var App = React.createClass({
         let valores = this.state.valores;
         let nuevoValor = (this.state.turno === JUGADORX) ? 'X' : '0';
         valores[numeroFila][numeroColumna] = nuevoValor;
-        this.ganador(valores, numeroFila, numeroColumna);
         this.setState({
             turno: (this.state.turno === JUGADORX) ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
         });
+        this.ganador(valores, numeroFila, numeroColumna);
     },
 
     render: function() {
-        var texto = "Turno del " + this.state.turno.text;
+        var texto = this.state.turno.text ? "Turno del " + this.state.turno.text : "" + this.state.turno;
         return (
             <div>
                 <Cabecera texto={texto}/>
