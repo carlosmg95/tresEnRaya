@@ -10,8 +10,8 @@ var Marcador = React.createClass({
         let marcador = this.props.jugadores.map(function(jugador) {
             let myKey = jugador.name;
             return(
-                <Panel key={myKey} header={this.props.jugador.name}>
-                    {this.props.jugador.points}
+                <Panel key={myKey} header={jugador.name}>
+                    {jugador.points}
                 </Panel>
             );
         }, this);
