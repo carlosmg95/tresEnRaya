@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+import { PageHeader } from 'react-bootstrap';
+
 const Cabecera = require("./Cabecera.jsx");
 const Tablero = require("./Tablero.jsx");
 const Marcador = require("./Marcador.jsx");
@@ -60,8 +62,9 @@ var App = React.createClass({
         var texto = this.state.turno.text ? "Turno del " + this.state.turno.text : "" + this.state.turno;
         return (
             <div>
+                <PageHeader>Tres En Raya <small>IWEB</small></PageHeader>
                 <Cabecera texto={texto}/>
-                <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin}/>
+                <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin} style={{width: '300px', marginLeft: '10px'}}/>
                 <Marcador jugadores={jugadores}/>
             </div>
         )

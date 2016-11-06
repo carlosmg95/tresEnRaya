@@ -38338,6 +38338,8 @@ module.exports = warning;
 },{"_process":429}],423:[function(require,module,exports){
 'use strict';
 
+var _reactBootstrap = require('react-bootstrap');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -38403,8 +38405,18 @@ var App = React.createClass({
         return React.createElement(
             'div',
             null,
+            React.createElement(
+                _reactBootstrap.PageHeader,
+                null,
+                'Tres En Raya ',
+                React.createElement(
+                    'small',
+                    null,
+                    'IWEB'
+                )
+            ),
             React.createElement(Cabecera, { texto: texto }),
-            React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick, fin: this.state.fin }),
+            React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick, fin: this.state.fin, style: { width: '300px', marginLeft: '10px' } }),
             React.createElement(Marcador, { jugadores: jugadores })
         );
     }
@@ -38412,7 +38424,7 @@ var App = React.createClass({
 
 module.exports = App;
 
-},{"./Cabecera.jsx":424,"./Marcador.jsx":426,"./Tablero.jsx":427,"react":418,"react-dom":256}],424:[function(require,module,exports){
+},{"./Cabecera.jsx":424,"./Marcador.jsx":426,"./Tablero.jsx":427,"react":418,"react-bootstrap":245,"react-dom":256}],424:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -38424,7 +38436,7 @@ var Cabecera = React.createClass({
     render: function render() {
         return React.createElement(
             'header',
-            { className: 'cabecera' },
+            { className: 'cabecera', style: { textAlign: 'center' } },
             this.props.texto
         );
     }
@@ -38440,7 +38452,7 @@ var _reactBootstrap = require('react-bootstrap');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var casillaStyle = {
+var CASILLA_STYLE = {
     height: '100px',
     width: '100px'
 };
@@ -38457,7 +38469,7 @@ var Casilla = React.createClass({
     render: function render() {
         return React.createElement(
             _reactBootstrap.Button,
-            { bsStyle: 'primary', style: casillaStyle, className: this.props.valor === "-" ? "clickable" : "no_clickable", onClick: this.casillaClick },
+            { bsStyle: 'primary', style: CASILLA_STYLE, className: this.props.valor === "-" ? "clickable" : "no_clickable", onClick: this.casillaClick },
             this.props.valor
         );
     }
@@ -38470,10 +38482,15 @@ module.exports = Casilla;
 
 var _reactBootstrap = require('react-bootstrap');
 
+var PANEL_STYLE = {
+    float: 'left',
+    marginLeft: '10px',
+    marginTop: '10px',
+    width: '110px'
+};
+
 var React = require('react');
 var ReactDOM = require('react-dom');
-
-//var Plancha = require("./Plancha.jsx");
 
 var Marcador = React.createClass({
     displayName: 'Marcador',
@@ -38483,7 +38500,7 @@ var Marcador = React.createClass({
             var myKey = jugador.name;
             return React.createElement(
                 _reactBootstrap.Panel,
-                { key: myKey, header: jugador.name },
+                { style: PANEL_STYLE, key: myKey, header: jugador.name },
                 jugador.points
             );
         }, this);
@@ -38520,13 +38537,13 @@ var Tablero = React.createClass({
             }, this);
             return React.createElement(
                 'div',
-                null,
+                { key: "" + indiceFila },
                 fila
             );
         }, this);
         return React.createElement(
             'div',
-            null,
+            { style: this.props.style },
             tablero
         );
     }

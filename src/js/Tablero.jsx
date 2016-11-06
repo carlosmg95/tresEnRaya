@@ -16,9 +16,9 @@ var Tablero = React.createClass({
                     <Casilla valor={valor} indiceFila={indiceFila} indiceColumna={indiceColumna} key={myKey} fin={this.props.fin} manejadorClick={this.tableroClick}/>
                 )
             }, this);
-            return (<div>{fila}</div>)
+            return (<div key={"" + indiceFila}>{fila}</div>)
         }, this);
-        return (<div>{tablero}</div>);
+        return (<div style={this.props.style}>{tablero}</div>);
     }
 });
 

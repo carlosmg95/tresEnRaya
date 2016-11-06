@@ -1,9 +1,10 @@
 .game {
-    float: left;
+    width: 300px;
+    margin: auto;
 }
 
 .logo {
-    float: left;
+    float: right;
     width: 100px;
-    margin-left: 50px;
+    margin-right: 50px;
 }

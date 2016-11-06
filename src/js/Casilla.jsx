@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 import { Button } from 'react-bootstrap';
 
-const casillaStyle = {
+const CASILLA_STYLE = {
     height: '100px',
     width: '100px'
 };
@@ -17,7 +17,7 @@ let Casilla = React.createClass({
     
     render: function() {
         return (
-            <Button bsStyle="primary" style={casillaStyle} className={this.props.valor === "-"? "clickable" : "no_clickable"} onClick={this.casillaClick}>
+            <Button bsStyle="primary" style={CASILLA_STYLE} className={this.props.valor === "-"? "clickable" : "no_clickable"} onClick={this.casillaClick}>
                 {this.props.valor}
             </Button>
         )
