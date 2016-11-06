@@ -62,7 +62,7 @@ var App = React.createClass({
     reiniciar: function() {
         this.setState({
             turno: JUGADORX,
-            valores: VALORES,
+            valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
             fin: false
         });
     },
@@ -74,7 +74,7 @@ var App = React.createClass({
                 <PageHeader>Tres En Raya <small>IWEB</small></PageHeader>
                 <Cabecera texto={texto}/>
                 <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin} style={{width: '300px', marginLeft: '10px'}}/>
-                <Button bsStyle="succes" onClick={reiniciar}>Reiniciar partida</Button>
+                <Button bsStyle="success" style={{marginLeft: '10px', marginTop: '10px'}} onClick={this.reiniciar}>Reiniciar partida</Button>
                 <Marcador jugadores={jugadores}/>
             </div>
         )
