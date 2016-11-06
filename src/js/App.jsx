@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 import { PageHeader } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const Cabecera = require("./Cabecera.jsx");
 const Tablero = require("./Tablero.jsx");
@@ -58,6 +59,14 @@ var App = React.createClass({
         this.ganador(valores, numeroFila, numeroColumna);
     },
 
+    reiniciar: function() {
+        this.setState({
+            turno: JUGADORX,
+            valores: VALORES,
+            fin: false
+        });
+    },
+
     render: function() {
         var texto = this.state.turno.text ? "Turno del " + this.state.turno.text : "" + this.state.turno;
         return (
@@ -65,6 +74,7 @@ var App = React.createClass({
                 <PageHeader>Tres En Raya <small>IWEB</small></PageHeader>
                 <Cabecera texto={texto}/>
                 <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick} fin={this.state.fin} style={{width: '300px', marginLeft: '10px'}}/>
+                <Button bsStyle="succes" onClick={reiniciar}>Reiniciar partida</Button>
                 <Marcador jugadores={jugadores}/>
             </div>
         )
