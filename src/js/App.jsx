@@ -44,6 +44,12 @@ var App = React.createClass({
                 turno: "Juego acabado",
                 fin: true
             });
+        } else if (JUGADORX.points + JUGADOR0.points >= 9) {
+            alert("Empate");
+            this.setState({
+                turno: "Juego acabado",
+                fin: true
+            });
         }
     },
 
