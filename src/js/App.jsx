@@ -39,7 +39,6 @@ var App = React.createClass({
 
     ganador: function(valores, numeroFila, numeroColumna) {
         if(horizontal(valores, numeroFila) || vertical(valores, numeroColumna) || diagonal(valores)) {
-            this.state.turno.points++;
             alert("El ganador es el " + this.state.turno.name);
             this.setState({
                 turno: "Juego acabado",
@@ -52,6 +51,7 @@ var App = React.createClass({
         let valores = this.state.valores;
         let nuevoValor = (this.state.turno === JUGADORX) ? 'X' : '0';
         valores[numeroFila][numeroColumna] = nuevoValor;
+        this.state.turno.points++;
         this.setState({
             turno: (this.state.turno === JUGADORX) ? JUGADOR0 : JUGADORX,
             valores: this.state.valores
@@ -60,6 +60,8 @@ var App = React.createClass({
     },
 
     reiniciar: function() {
+        JUGADORX.points = 0;
+        JUGADOR0.points = 0;
         this.setState({
             turno: JUGADORX,
             valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
